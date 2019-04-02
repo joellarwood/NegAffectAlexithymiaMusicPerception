@@ -1,0 +1,287 @@
+---
+title: "Revise and Resubmit Analyses"
+author: "Joel Larwood"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output: pdf_document
+---
+
+#Revise and Resubmit Analysis 
+
+Additional Analyses as requested 
+
+This script can be reproduced with data hosted on GitHub https://github.com/joellarwood/Alexithymia-and-Music-Affect-Perception/blob/master/Data%20with%20Depression.csv
+
+Note: Data was collected as part of a larger project which contained depression scores, these have been included upon reviewer comments highlighting need to control for mood. 
+
+```{r import and clean}
+xfun::pkg_attach2("tidyverse")
+reduced <- read_csv("https://raw.githubusercontent.com/joellarwood/NegAffectAlexithymiaMusicPerception-Bookdown/master/Data%20with%20Depression.csv")
+#ensure only complete data is present 
+table(reduced$Finished)
+#count p's
+nrow(reduced)
+#visualise missing data 
+xfun::pkg_attach2("naniar")
+reduced %>% select(contains("MUVA"),
+                   contains("MUAR"),
+                   contains("TAS"),
+                   contains("DASS")) %>% vis_miss()
+#no missing data 
+```
+create woring data frame 'cleanrr' for analysis 
+```{r}
+cleanrr <- reduced
+```
+
+#make lexicon counts 
+
+```{r lexicon}
+cleanrr$pos.lex.count <- ((cleanrr$posemo*cleanrr$WC)/100)
+#round 
+cleanrr$pos.lex.count <- round(cleanrr$pos.lex.count, digits = 0)
+cleanrr$neg.lex.count <- ((cleanrr$negemo*cleanrr$WC)/100)
+cleanrr$neg.lex.count <- round(cleanrr$neg.lex.count, digits = 0)
+cleanrr$emo.lex.count <- cleanrr$neg.lex.count + cleanrr$pos.lex.count
+xfun::pkg_attach2("psych")
+psych::describe(select(cleanrr, contains("count")))
+```
+
+#Get music scores 
+```{r music score creation}
+##--------Music Ratings
+#Sad Music 
+#Valence
+cleanrr$sad.valence <- (cleanrr$MUVA31_1 + cleanrr$MUVA109_1) / 2
+#AROUSAL 
+cleanrr$sad.arousal <- (cleanrr$MUAR31_1 + cleanrr$MUAR109_1) / 2
+#Angry music 
+#Valence 
+cleanrr$angry.valence <- (cleanrr$MUVA1_1 + cleanrr$MUVA69_1) / 2
+#AROUSAL
+cleanrr$angry.arousal <- (cleanrr$MUAR1_1 + cleanrr$MUAR69_1) / 2
+#Fear Music
+#VALENCE
+cleanrr$fear.valence <- (cleanrr$MUVA11_1 + cleanrr$MUVA14_1) / 2
+#AROUSAL
+cleanrr$fear.arousal <- (cleanrr$MUAR11_1 + cleanrr$MUAR14_1) / 2
+#Happy Music 
+#VALENCE
+cleanrr$happy.valence <- (cleanrr$MUVA23_1 + cleanrr$MUVA105_1) / 2 
+#AROUSAL
+cleanrr$happy.arousal = (cleanrr$MUAR23_1 + cleanrr$MUAR105_1) / 2
+#Tender music 
+#VALENCE
+cleanrr$tender.valence <- (cleanrr$MUVA41_1 + cleanrr$MUVA42_1) / 2 
+#AROUSAL
+cleanrr$tender.arousal <- (cleanrr$MUAR41_1 + cleanrr$MUAR42_1) / 2 
+```
+
+#describe songs
+```{r}
+cleanrr %>% select(contains("valence"),
+                   contains("arousal")) %>% psych::describe()
+```
+
+# Create alexithymia scores 
+
+### Create safe variables for recoding to avoid double coding 
+
+```{r}
+cleanrr$rTAS4_1 <- cleanrr$TAS4_1
+cleanrr$rTAS5_1 <- cleanrr$TAS5_1
+cleanrr$rTAS10_1 <- cleanrr$TAS10_1
+cleanrr$rTAS18_1 <- cleanrr$TAS18_1
+cleanrr$rTAS19_1 <- cleanrr$TAS19_1
+```
+
+### Recode variables 
+```{r}
+cleanrr$TAS4_1 <- 6 - cleanrr$rTAS4_1
+cleanrr$TAS5_1 <- 6 - cleanrr$rTAS5_1
+cleanrr$TAS10_1 <- 6 - cleanrr$rTAS10_1
+cleanrr$TAS18_1 <- 6 - cleanrr$rTAS18_1
+cleanrr$TAS19_1 <- 6 - cleanrr$rTAS19_1
+```
+
+### Create TAS total and get descriptives
+```{r}
+xfun::pkg_attach2("tidyverse")
+check <- cleanrr$alexithymia <- cleanrr %>% select (contains("TAS"),
+                                   -contains("rTAS")) %>% rowSums()
+
+xfun::pkg_attach2("psych")
+cleanrr %>% select (contains("TAS"),
+                -contains("rTAS")) %>% psych::alpha()
+
+```
+
+### Create difficulty identifying feelings 
+```{r}
+cleanrr$dif <- cleanrr %>% select(TAS1_1, TAS3_1, TAS6_1, TAS7_1, TAS9_1, TAS13_1, TAS14_1) %>% rowSums()
+
+cleanrr %>% select(TAS1_1, TAS3_1, TAS6_1, TAS7_1, TAS9_1, TAS13_1, TAS14_1) %>% alpha()
+```
+
+### Create difficulty describing feeligns 
+```{r}
+cleanrr$ddf <- cleanrr %>% select(TAS2_1, TAS4_1, TAS11_1, TAS12_1, TAS17_1) %>% rowSums()
+
+cleanrr %>% select(TAS2_1, TAS4_1, TAS11_1, TAS12_1, TAS17_1) %>% alpha()
+```
+
+
+### Create externally oriented thinking 
+```{r}
+cleanrr$eot <- cleanrr %>% select(TAS5_1, TAS8_1, TAS10_1, TAS15_1, TAS18_1, TAS19_1, TAS20_1) %>% rowSums()
+
+cleanrr %>% select(TAS5_1, TAS8_1, TAS10_1, TAS15_1, TAS18_1, TAS19_1, TAS20_1) %>% alpha()
+
+```
+### Create cut-off
+```{r above below cut-off}
+xfun::pkg_attach2("sjmisc")
+cleanrr$clinicalalex <- dicho(cleanrr$alexithymia, dich.by = 50)
+cleanrr$clinicalalex<- factor(cleanrr$clinicalalex,
+                                 levels = c(0,1),
+                                 labels = c("below 51", "above 51"))
+```
+## Alexithymia descriptives
+```{r describe alexithymia}
+cleanrr %>% select(alexithymia, dif, ddf, eot) %>% describe()
+table(cleanrr$clinicalalex)
+```
+
+#create DASS - depression subscale 
+```{r create depression scores}
+D <- c("DASS3_1", "DASS10_1", "DASS13_1", "DASS16_1", "DASS17_1", "DASS21_1")
+cleanrr %>% select(D) %>% alpha()
+cleanrr$depression <- cleanrr %>% select(D) %>% rowSums()
+describe(cleanrr$depression)
+```
+
+# Correlation analyses lexicon data
+```{r lexicon correlations}
+cleanrr %>% select(alexithymia, ddf, dif, eot, emo.lex.count, pos.lex.count, neg.lex.count) %>% apaTables::apa.cor.table(filename = "lexcor.txt")
+```
+
+# Arousal GLMM
+##Arousal data
+```{r reshape arousal}
+#give easy ID 
+cleanrr$id <- (seq.int(nrow(cleanrr)))
+#arousal data
+rr.long.arousal <-  gather(data = cleanrr, key = condition, value = arousal, sad.arousal, happy.arousal, fear.arousal, tender.arousal, angry.arousal, factor_key=TRUE)
+rr.long.arousal <- rr.long.arousal %>% select(contains("ID"),
+                                        contains("alexithymia"),
+                                        contains("ddf"),
+                                        contains("dif"),
+                                        contains("eot"),
+                                        contains("condition"),
+                                        contains("arousal"),
+                                        contains("depression"),
+                                         contains("ddf"),
+                                        contains("dif"),
+                                        contains("eot"))
+xfun::pkg_attach2("plyr")
+rr.long.arousal$condition <- mapvalues (rr.long.arousal$condition, from = c ("sad.arousal", "happy.arousal", "fear.arousal", "tender.arousal", "angry.arousal"), to = c("Sad", "Happy", "Fearful", "Tender", "Angry"))
+
+rr.long.arousal$condition<-relevel(rr.long.arousal$condition, "Tender")
+levels(rr.long.arousal$condition)
+```
+## No depression in model
+```{r arousal glmm}
+xfun::pkg_attach2("lme4")
+arousalinteract <- glmer(arousal ~ 1 + alexithymia + condition + alexithymia*condition + (1|id), data = rr.long.arousal)
+
+xfun::pkg_attach2("lmerTest")
+a.test <- as(arousalinteract,"merModLmerTest")
+anova(a.test)
+
+xfun::pkg_attach2("interactions")
+interactions::sim_slopes(model = arousalinteract, pred = alexithymia , modx = condition, confint = TRUE)
+```
+## Plot model
+```{r plot arousal}
+xfun::pkg_attach2("jtools")
+arousalplot <- interactions::interact_plot(model = arousalinteract, pred = alexithymia, modx = condition, interval = TRUE) + 
+  theme_apa() + 
+  geom_hline(yintercept = 0, linetype = "dotted") + labs (x = "Alexithymia", y = "Rated Arousal") 
+arousalplot
+```
+
+##Depression in model
+```{r arousal with depression}
+arousalinteractdep <- glmer(arousal ~ 1 + depression + alexithymia + condition + alexithymia*condition + (1|id), data = rr.long.arousal)
+anova(arousalinteract, arousalinteractdep) %>% as.data.frame() %>% sjPlot::tab_df()
+```
+
+#Valence GLMM
+## Valence data reshape
+```{r valence reshape}
+rr.long.valence <- gather(data = cleanrr, key = condition, value = valence, sad.valence, happy.valence, fear.valence, tender.valence, angry.valence, factor_key=TRUE)
+rr.long.valence <- rr.long.valence %>% select(contains("ID"),
+                                        contains("alexithymia"),
+                                        contains("condition"),
+                                        contains("depression"),
+                                        contains("valence"),
+                                        contains("ddf"),
+                                        contains("dif"),
+                                        contains("eot"))
+rr.long.valence$condition <- mapvalues (rr.long.valence$condition, from = c ("sad.valence", "happy.valence", "fear.valence", "tender.valence", "angry.valence"), to = c("Sad", "Happy", "Fearful", "Tender", "Angry"))
+
+rr.long.valence$condition<-relevel(rr.long.valence$condition, "Tender")
+
+levels(rr.long.valence$condition)
+```
+## Model fit
+```{r valence glmm}
+valenceinteract <- glmer(valence ~ 1 + alexithymia + condition + alexithymia*condition + (1|id), data = rr.long.valence)
+
+sjPlot::tab_model(valenceinteract, arousalinteract)
+
+xfun::pkg_attach2("lmerTest")
+v.test <- as(valenceinteract,"merModLmerTest")
+anova(v.test) 
+
+
+xfun::pkg_attach2("interactions")
+interactions::sim_slopes(model = valenceinteract, pred = alexithymia , modx = condition, confint = TRUE)
+```
+##Plot Model
+```{r valence plot}
+valenceplot <- interactions::interact_plot(model = valenceinteract, pred = alexithymia, modx = condition, interval = TRUE) + 
+  theme_apa() + 
+  geom_hline(yintercept = 0, linetype = "dotted") + labs (x = "Alexithymia", y = "Rated valence") 
+valenceplot
+```
+
+##Depression in model 
+```{r valence with depression}
+valenceinteractdep <- lmer(valence ~ 1 + depression + alexithymia + condition + alexithymia*condition + (1|id), data = rr.long.valence)
+xfun::pkg_attach2("htmlTable")
+write_tableHTML(tableHTML(mtcars), file = 'myfile.html')
+
+anova(valenceinteract, valenceinteractdep) %>% as.data.frame() %>% sjPlot::tab_df()
+```
+
+## Print ggplot to word 
+
+```{r}
+xfun::pkg_attach2("rvg", "officer")
+valencedoc <- read_pptx()
+valencedoc <- add_slide(valencedoc, layout = "Title and Content", master = "Office Theme")
+valencedoc <- ph_with_vg(valencedoc, ggobj = valenceplot,
+                  type = "body")
+print(valencedoc, target = "valenceplot.pptx")
+
+
+arousaldoc <- read_pptx()
+arousaldoc <- add_slide(arousaldoc, layout = "Title and Content", master = "Office Theme")
+arousaldoc <- ph_with_vg(arousaldoc, ggobj = arousalplot,
+                  type = "body")
+print(arousaldoc, target = "arousalplot.pptx")
+```
+
+
+
+

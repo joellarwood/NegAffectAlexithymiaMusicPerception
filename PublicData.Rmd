@@ -1,0 +1,50 @@
+ ---
+title: "Public Data"
+author: "Joel Larwood"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+# Revise and Resubmit #1 Public Data 
+
+```{r}
+xfun::pkg_attach2("tidyverse")
+devtools::install_github("centerforopenscience/osfr")
+
+```
+
+```{r}
+
+osfproject <- osfr::osf_retrieve_node("zwsdj")
+
+```
+
+```{r}
+raw <- read_csv("~/Desktop/Data File Masters/Alexithymia Music Perception and LIWC.csv")
+names(raw)
+```
+
+```{r}
+cleaneddata <- raw %>% select(contains("ID"),
+                          contains("Finished"),
+                          contains("MUAR"),
+                          contains("MUVA"),
+                          contains("TAS"),
+                          contains("DASS"),
+                          contains("age"),
+                          contains("gender"),
+                          contains("Exp"),
+                          contains("play"),
+                          contains("Hours"),
+                          contains("Genre"),
+                          contains("WC"),
+                          contains("emo"),
+                          -contains("Page")) %>% drop_na("ProlificID") %>% filter(Finished == 1)
+write_csv(cleaneddata, path = "~/Desktop/git/NegAffectAlexithymiaMusicPerception/Data with Depression.csv")
+```
+
+```{r}
+osf_upload(osfproject, path = "Data with Depression.csv", overwrite = TRUE)
+
+osf_upload(osfproject, path = "PublicData.Rmd", overwrite = TRUE)
+
+```
+

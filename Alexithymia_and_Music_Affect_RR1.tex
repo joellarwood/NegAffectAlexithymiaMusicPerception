@@ -1,0 +1,210 @@
+\documentclass[man]{apa6}
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+  \ifxetex
+    \usepackage{mathspec}
+  \else
+    \usepackage{fontspec}
+  \fi
+  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+\usepackage{microtype}
+\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\usepackage{hyperref}
+\hypersetup{unicode=true,
+            pdftitle={Negative Valence Specific Deficits for the Perception of Musical Affect In Alexithymia},
+            pdfauthor={Joel L Larwood, Eric J Vanman, \& Genevieve A Dingle},
+            pdfkeywords={keywords},
+            pdfborder={0 0 0},
+            breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+% Redefines (sub)paragraphs to behave more like sections
+\ifx\paragraph\undefined\else
+\let\oldparagraph\paragraph
+\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+\let\oldsubparagraph\subparagraph
+\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+
+%%% Use protect on footnotes to avoid problems with footnotes in titles
+\let\rmarkdownfootnote\footnote%
+\def\footnote{\protect\rmarkdownfootnote}
+
+
+  \title{Negative Valence Specific Deficits for the Perception of Musical Affect
+In Alexithymia}
+    \author{Joel L Larwood\textsuperscript{1}, Eric J Vanman\textsuperscript{1}, \&
+Genevieve A Dingle}
+    \date{}
+  
+\shorttitle{Alexithymia and Musical Affect }
+\affiliation{
+\vspace{0.5cm}
+\textsuperscript{1} School of Psychology, The University of Queensland}
+\keywords{keywords\newline\indent Word count: X}
+\usepackage{csquotes}
+\usepackage{upgreek}
+\captionsetup{font=singlespacing,justification=justified}
+
+\usepackage{longtable}
+\usepackage{lscape}
+\usepackage{multirow}
+\usepackage{tabularx}
+\usepackage[flushleft]{threeparttable}
+\usepackage{threeparttablex}
+
+\newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
+
+\makeatletter
+\newcommand\LastLTentrywidth{1em}
+\newlength\longtablewidth
+\setlength{\longtablewidth}{1in}
+\newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
+
+
+\DeclareDelayedFloatFlavor{ThreePartTable}{table}
+\DeclareDelayedFloatFlavor{lltable}{table}
+\DeclareDelayedFloatFlavor*{longtable}{table}
+\makeatletter
+\renewcommand{\efloat@iwrite}[1]{\immediate\expandafter\protected@write\csname efloat@post#1\endcsname{}}
+\makeatother
+\usepackage{lineno}
+
+\linenumbers
+
+\authornote{The pre-registration of this study can be viewed
+at \url{https://osf.io/3myru/wiki/home/} a link to data and analysis
+script can be found at \url{https://osf.io/zwsdj/}\\
+JL designed the study, conducted analyses and wrote the manuscript, EV
+and GD contributed to study design and the drfting of the manuscript.
+
+Correspondence concerning this article should be addressed to Joel L
+Larwood, School of Psychology, The University of Queensland, St Lucia,
+QLD, Australia, 4072. E-mail:
+\href{mailto:joel.larwood@uq.net.au}{\nolinkurl{joel.larwood@uq.net.au}}}
+
+\abstract{
+One or two sentences providing a \textbf{basic introduction} to the
+field, comprehensible to a scientist in any discipline.
+
+Two to three sentences of \textbf{more detailed background},
+comprehensible to scientists in related disciplines.
+
+One sentence clearly stating the \textbf{general problem} being
+addressed by this particular study.
+
+One sentence summarizing the main result (with the words ``\textbf{here
+we show}'' or their equivalent).
+
+Two or three sentences explaining what the \textbf{main result} reveals
+in direct comparison to what was thought to be the case previously, or
+how the main result adds to previous knowledge.
+
+One or two sentences to put the results into a more \textbf{general
+context}.
+
+Two or three sentences to provide a \textbf{broader perspective},
+readily comprehensible to a scientist in any discipline.
+
+
+}
+
+\begin{document}
+\maketitle
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##   name                 id                   local_path             meta    
+## * <chr>                <chr>                <chr>                  <list>  
+## 1 Data with Depressio~ 5ca300c139496f00186~ Data with Depression.~ <list [~
+\end{verbatim}
+
+\begin{verbatim}
+## [1] 162
+\end{verbatim}
+
+\begin{figure}
+\centering
+\includegraphics{Alexithymia_and_Music_Affect_RR1_files/figure-latex/unnamed-chunk-2-1.pdf}
+\caption{}
+\end{figure}
+
+\section{Methods}\label{methods}
+
+\subsection{Participants}\label{participants}
+
+Participants were 162 living in the United Kingdom were sampled from
+Prolific (\url{http://prolifc.ac}). Participants had a mean age of 4.52
+(\$SD 1.94) and 91 were female. To be eligible for the study
+participants had to be ages 18 to 25 and residents of the United
+Kingdom, no exclusion criteria was applied. Participants were payed
+\pounds~1.25 for their participation in the online survey (15 minutes at
+\pounds~5 an hour) and the study was advertised as \enquote{exploring
+music and emotions}.
+
+\subsection{Material}\label{material}
+
+\subsection{Procedure}\label{procedure}
+
+\subsection{Data analysis}\label{data-analysis}
+
+We used R (Version 3.5.2; {\textbf{???}}) and the R-packages
+\emph{dplyr} (Version 0.8.0.1; {\textbf{???}}), \emph{forcats} (Version
+0.3.0; {\textbf{???}}), \emph{ggplot2} (Version 3.1.0; {\textbf{???}}),
+\emph{naniar} (Version 0.4.2; {\textbf{???}}), \emph{papaja} (Version
+0.1.0.9842; {\textbf{???}}), \emph{purrr} (Version 0.3.2;
+{\textbf{???}}), \emph{readr} (Version 1.3.1; {\textbf{???}}),
+\emph{stringr} (Version 1.4.0; {\textbf{???}}), \emph{tibble} (Version
+2.1.1; {\textbf{???}}), \emph{tidyr} (Version 0.8.2; {\textbf{???}}),
+and \emph{tidyverse} (Version 1.2.1; {\textbf{???}}) for all our
+analyses.
+
+\section{Results}\label{results}
+
+\section{Discussion}\label{discussion}
+
+\newpage
+
+\section{References}\label{references}
+
+\begingroup
+\setlength{\parindent}{-0.5in} \setlength{\leftskip}{0.5in}
+
+\hypertarget{refs}{}
+
+\endgroup
+
+
+\end{document}

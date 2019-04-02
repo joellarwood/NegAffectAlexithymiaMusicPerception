@@ -1,0 +1,133 @@
+---
+title: "Analyses for inital submission"
+author: "Joel Larwood"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+---
+# Initial Submission 
+
+can also be viewed at https://github.com/joellarwood/Alexithymia-and-Music-Affect-Perception/blob/master/AlexithymiaMusicPerception2018Script.Rmd 
+
+```{r import and tidy, echo = TRUE, include = TRUE, eval = TRUE}
+xfun::pkg_attach2("tidyverse", "TOSTER", "Hmisc", "jtools", "lme4", "plyr", "psych")
+clean <- read_csv("https://raw.githubusercontent.com/joellarwood/Alexithymia-and-Music-Affect-Perception/master/LarwoodAlexithymiaMusicAffectPerception.csv")
+```
+
+
+```{r alexithymia}
+##-------create alexithymia
+#Reverse scoring 
+clean$TAS4_1 <- 6 - clean$TAS4_1
+clean$TAS5_1 <- 6 - clean$TAS5_1
+clean$TAS10_1 <- 6 - clean$TAS10_1
+clean$TAS18_1 <- 6 - clean$TAS18_1
+clean$TAS19_1 <- 6 - clean$TAS19_1
+psych::alpha(select(clean, contains("TAS")))
+clean$alexithymia <- rowSums(select(clean, contains("TAS")))
+psych::describe(clean$alexithymia)
+```
+
+```{r lexicon}
+clean$pos.lex.count <- ((clean$posemo*clean$WC)/100)
+#round 
+clean$pos.lex.count <- round(clean$pos.lex.count, digits = 0)
+clean$neg.lex.count <- ((clean$negemo*clean$WC)/100)
+clean$neg.lex.count <- round(clean$neg.lex.count, digits = 0)
+clean$emo.lex.count <- clean$neg.lex.count + clean$pos.lex.count
+psych::describe(select(clean, contains("count")))
+rcorr(as.matrix(clean %>% select(contains("count"), contains("alexithymia"))))
+```
+
+```{r TOST}
+TOSTER::powerTOSTr(alpha = .05, statistical_power = .8, N = 162) #bounds = +/- .228
+```
+
+```{r total tost}
+#total emotions
+TOSTER::TOSTr(n = 162, r = -.05, low_eqbound_r = -.228, high_eqbound_r = .228) 
+```
+
+```{r positive tost}
+#positive emotions  
+TOSTER::TOSTr(n = 162, r = -.13, low_eqbound_r = -.228, high_eqbound_r = .228) 
+```
+
+```{r negative tost}
+#negative emotions
+TOSTER::TOSTr(n = 162, r = .02, low_eqbound_r = -.228, high_eqbound_r = .228)  
+```
+
+```{r music score creation}
+##--------Music Ratings
+#Sad Music 
+#Valence
+clean$sad.valence <- (clean$MUVA31_1 + clean$MUVA109_1) / 2
+#AROUSAL 
+clean$sad.arousal <- (clean$MUAR31_1 + clean$MUAR109_1) / 2
+#Angry music 
+#Valence 
+clean$angry.valence <- (clean$MUVA1_1 + clean$MUVA69_1) / 2
+#AROUSAL
+clean$angry.arousal <- (clean$MUAR1_1 + clean$MUAR69_1) / 2
+#Fear Music
+#VALENCE
+clean$fear.valence <- (clean$MUVA11_1 + clean$MUVA14_1) / 2
+#AROUSAL
+clean$fear.arousal <- (clean$MUAR11_1 + clean$MUAR14_1) / 2
+#Happy Music 
+#VALENCE
+clean$happy.valence <- (clean$MUVA23_1 + clean$MUVA105_1) / 2 
+#AROUSAL
+clean$happy.arousal = (clean$MUAR23_1 + clean$MUAR105_1) / 2
+#Tender music 
+#VALENCE
+clean$tender.valence <- (clean$MUVA41_1 + clean$MUVA42_1) / 2 
+#AROUSAL
+clean$tender.arousal <- (clean$MUAR41_1 + clean$MUAR42_1) / 2 
+clean %>% select(contains("valence"), contains ("arousal")) %>% describe()
+```
+
+```{r re-shape data}
+long.arousal <- data_long <- gather(data = clean, key = condition, value = arousal, sad.arousal, happy.arousal, fear.arousal, tender.arousal, angry.arousal, factor_key=TRUE)
+long.arousal <- long.arousal %>% select(contains("ID"),
+                                        contains("alexithymia"),
+                                        contains("condition"),
+                                        contains("arousal"))
+long.arousal$condition <- mapvalues (long.arousal$condition, from = c ("sad.arousal", "happy.arousal", "fear.arousal", "tender.arousal", "angry.arousal"), to = c("Sad", "Happy", "Fearful", "Tender", "Angry"))
+long.valence <- data_long <- gather(data = clean, key = condition, value = valence, sad.valence, happy.valence, fear.valence, tender.valence, angry.valence, factor_key=TRUE)
+long.valence <- long.valence %>% select(contains("ID"),
+                                        contains("alexithymia"),
+                                        contains("condition"),
+                                        contains("valence"))
+long.valence$condition <- mapvalues (long.valence$condition, from = c ("sad.valence", "happy.valence", "fear.valence", "tender.valence", "angry.valence"), to = c("Sad", "Happy", "Fearful", "Tender", "Angry"))
+```
+
+```{r GLM arousal}
+xfun::pkg_attach2("lme4")
+arousal.glmm <- lme4::glmer(arousal ~ alexithymia*condition + (1|ID), data = long.arousal)
+summ(arousal.glmm)
+xfun::pkg_attach2("interactions")
+sim_slopes(model = arousal.glmm, pred = alexithymia, modx = condition, digits = 3)
+interact_plot(model = arousal.glmm, pred = alexithymia, modx = condition, interval = TRUE) + 
+  theme_apa() + 
+  geom_hline(yintercept = 0, linetype = "dotted") + labs (x = "Alexithymia", y = "Rated Arousal") 
+```
+
+
+```{r GLM valence}
+valence.glmm <- glmer(valence ~ alexithymia*condition + (1|ID), data = long.valence)
+summ (valence.glmm)
+sim_slopes(model = valence.glmm, pred = alexithymia, modx = condition, digits = 3) 
+interact_plot(model = valence.glmm, pred = alexithymia, modx = condition, interval = TRUE) + 
+  theme_apa() + geom_hline(yintercept = 0, linetype = "dotted") + 
+  labs (x = "Alexithymia", y = "Rated Valence") 
+```
+
+
+```{r}
+capture.output(utils:::print.bibentry(citation("jtools"), style = "Bibtex"),
+               file = "jtoolsCITE.bib")
+capture.output(utils:::print.bibentry(citation("lme4"), style = "Bibtex"),
+               file = "LME4Cite.bib")
+capture.output(utils:::print.bibentry(citation(), style = "Bibtex"),
+               file = "Rcite.bib")
+```
