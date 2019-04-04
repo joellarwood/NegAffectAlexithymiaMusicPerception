@@ -61,7 +61,17 @@ output            : papaja::apa6_pdf
   Constructivist theories of emotion, notably those of Barrett [-@Barrett2006; -@Barrett2017] informed by @Russell2003, posit that emotions are constructed in relation to bodily sensations, situational context and knowledge about what constitutes a specific emotion, such as sadness or anger. This ability to label an emotion is possible through emotion words which store conceptual information reducing uncertainty around an experience [@Barrett2007]. Vital, but not sufficient for the emotion construction process is the awareness of core affect [@Barrett2017; @Russell2003]. Core affect consists of two dimensions: valence, how pleasant or unpleasant a feeling or object is, and arousal, how energizing or activating a feeling or object is. @Russell2003 holds that all objects and events have an affective quality, and therefore can be considered along the dimensions of valence and arousal. However, not all object or events will allow for a change in core affect, perception or experience of an emotion. For instance, a landscape will be seen, or perceived, and be attributed an affective quality but this perception of will not necessarily lead to an emotion. For an emotion to either be experienced or perceived the affective quality must be categorized into an emotion. This categorization process involves considering previous instances of an emotion and evaluating against the current situation [@Barrett2006]. Emotion perception then has two factors, core affect and it’s integration with conceptual emotion knowledge.  
   
   Alexithymia, within Barrett’s (2006) conceptualization is then the inability to conceptualize core affect into an emotion category. Given that emotion concepts are informed by past experiences the conceptual deficits seen in alexithymia may, in part, stem from an earlier deficit in affect perception and a lack of integration of affective information with semantic representations. Neurological studies can be seen to lend support to this supposition.
-  A key area in the process of constructing an instance of affect into an emotion is the left temporal pole, which stores conceptual information. Patients with localised damage to this reigon are unable to organise faces into emotional categories but are able to accurately sort the faces according to their affective quality [@lindquist2014]. However, the left temporal pole has not been implicated in neurological studies of alexithymia whereas other areas relevant to affect processing have [@Goerlich-Dobre2015; @vandervelde2013]. A systematic review of neural activation during stimuli presentation has revealed that higher scores on alexithymia are related to increased cognitive demand (higher anterior cingulate gyrus activation), decreased attention to negative stimuli (reduced amygdala activation), and reduced activation of interoceptive networks during positive stimuli presentation [@vandervelde2013]. Keeping within constructionist theory, these results suggest that the on-line processing of emotions 
+  A key area in the process of constructing an instance of affect into an emotion is the left temporal pole, which stores conceptual information. Patients with localised damage to this reigon are unable to organise faces into emotional categories but are able to accurately sort the faces according to their affective quality [@lindquist2014]. However, the left temporal pole has not been implicated in neurological studies of alexithymia whereas other areas relevant to affect processing have [@Goerlich-Dobre2015; @vandervelde2013]. A meta-analysis of neural activation during emotional stimuli presentation has revealed that higher scores on alexithymia are related to increased activation in the anterior cingulate gyrus. Furthermore decreased activation in the amygdala and dorsolateral prefrontal cortex was found during negative stimuli presentation as well as decreased activation of anterior insula during positive stimuli presentation. Lower grey-matter volume has also been found in the left middle temporal gyrus [@Grabe2014] but this has not been found to correspond to reduced activation during stimulus presentation [@vandervelde2013] 
+  
+  
+  
+  
+  to increased cognitive demand (higher anterior cingulate gyrus activation), decreased attention to negative stimuli (reduced amygdala activation), and reduced activation of interoceptive networks during positive stimuli presentation [@vandervelde2013]. 
+  
+  
+  
+  
+  Keeping within constructionist theory, these results suggest that the on-line processing of emotions 
 
 ```{r setup, include = FALSE}
 library("papaja")
@@ -112,7 +122,7 @@ nofemale <- dat %>% filter(Gender == 1) %>% nrow()
 
 ## Procedure
 
-## Data analysis
+## Data analysis 
 We used `r cite_r("r-references.bib")` for all our analyses.
 
 
