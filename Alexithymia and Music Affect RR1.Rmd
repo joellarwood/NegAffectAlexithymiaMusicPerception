@@ -57,17 +57,13 @@ output            : papaja::apa6_pdf
 ---
 
   Alexithymia is a sub-clinical personality trait primarily characterized by a lack of words for emotional experiences. It is considered to consist of three facets: difficulties identifying feelings, difficulty describing feelings, and an externally oriented thinking style. The difficulty identifying and describing emotions facets can be seen to reflect cognitive deficits in the processing [@Goerlich-Dobre2015]. Alexithymia is related to reduced subjective awareness of bodily feelings but not the objective ability to monitor bodily sensations or changes [@Zamariola2018]. High levels of alexithymia have been further related to a reduced capacity for forming mental representations of emotions [@Ihme2014]. More broadly, alexithymia has been found to relate to the reduced ability to accurately label emotions [@Grynberg2012a]. These difficulties observed in alexithymia are particularly relevant within constructivist theories of emotion. 
-  
   Constructivist theories of emotion, notably those of Barrett [-@Barrett2006; -@Barrett2017] informed by @Russell2003, posit that emotions are constructed in relation to bodily sensations, situational context and knowledge about what constitutes a specific emotion, such as sadness or anger. This ability to label an emotion is possible through emotion words which store conceptual information reducing uncertainty around an experience [@Barrett2007]. Vital, but not sufficient for the emotion construction process is the awareness of core affect [@Barrett2017; @Russell2003]. Core affect consists of two dimensions: valence, how pleasant or unpleasant a feeling or object is, and arousal, how energizing or activating a feeling or object is. @Russell2003 holds that all objects and events have an affective quality, and therefore can be considered along the dimensions of valence and arousal. However, not all object or events will allow for a change in core affect, perception or experience of an emotion. For instance, a landscape will be seen, or perceived, and be attributed an affective quality but this perception of will not necessarily lead to an emotion. For an emotion to either be experienced or perceived the affective quality must be categorized into an emotion. This categorization process involves considering previous instances of an emotion and evaluating against the current situation [@Barrett2006]. Emotion perception then has two factors, core affect and it’s integration with conceptual emotion knowledge.  
-  
   Alexithymia, within Barrett’s (2006) conceptualization is then the inability to conceptualize core affect into an emotion category. Given that emotion concepts are informed by past experiences (situated conceptualisation) the conceptual deficits seen in alexithymia may, in part, stem from an earlier deficit in affect perception and a lack of integration of affective information with semantic representations of emotion concepts. A meta-analysis of neural activation during emotional stimuli presentation has revealed that higher scores on alexithymia are related to increased activation in the anterior cingulate gyrus. Furthermore decreased activation in the amygdala and dorsolateral prefrontal cortex was found during negative stimuli presentation as well as decreased activation of anterior insula during positive stimuli presentation. Lower grey-matter volume has also been found in the left middle temporal gyrus [@Grabe2014] but this has not been found to correspond to reduced activation during stimulus presentation [@vandervelde2013]. Through a constructionist lens these areas are involved in the cognitive production of emotion through the integration of interoceptive (internal) and extroceptive (external) sensations allowing for the realisation of core affect (ACC), attending to salient external cues (amygdala), concept knowledge (dMPFC), and interoceptive awareness (anterior insula)[-@Lindquist2012]. Therefore, it is not just the linguistic or conceptual networks of the brain that are compromised in alexithymia but also, importantly, areas that correspond to attending to and realising core affect.
-  
   In a large systematic review @Grynberg2012 highlight defecits seen in emotion face processing in alexithymia, while patieally explained by clinical conditions may stem from poor conceptual representations of emotions. This is consistent with findings in the dMPFC and left temporal lobe. They go on to discuss emotion processing defecits in alexithymia also being associated with reduced sensitivity to perceptual cues. Specifically, @Vermeulen2008 and @Aftanas2003 suggest that high alexithymia corresponds with reduced attention to emotional stimuli. @Franz2004 does not lend support to this but suggests people high in alexithymia have a reduced propensity for emotional appraisal, which is required to construct an emotional instances (@Barrett2006; @Frija2016). Considering this body of literature there are strong grounds to the notion of alexithymia being charactersied by poor automatic processing of emotions and the potnetial for temporal constraints placed on emotion judgement reducing performance (@Parker2005). There is however evidence to suggest that defecits are seen in the processing of emotions over longer periods of time on the affective dimension of valence [@Vanman1998; @Luminet2004] 
-  
   Emotion relevence of affective quality is requisite for perception of an emotion  and therefore not all stimuli will lead to the perception of experience of affect, with the exception of disgust relevent stimuli and music [@Brosch2009; @Scherer2005].Considering musical and vocal stimuli alexithymia is asscociated with reduced sensitivity to emotional cues over short presentations [@Goerlich2011]. On a self-report level higher levels of alexithymia have been related to reduced accuracy in the perception and verbalisation of categorical emotions, although negative affect and austism were identified as additional contributing factors [@Bayot2014; Allen2013; @Heaton2012; @Taruffi2017; @Punkanen2008]. @Vermeulen2010 have shown that for people high in alexithymia music is able to influence cognitive processing, whereby negative music negatively influenced the encoding of semantic information. Thus it is possible that negative music can inpede the access to emotion concepts in high alexithymia. These results however do not highlight whether the deficits seen in emotional judgements in alexithymia negatively stem from difficulties at an affective level or begin at a higher level of conceptualisation. 
-  
-  Music is an ideal stimulus type to investigate the contribution of alexithymia to the reduced ability to make categorical emotion judgements as it is inherently processed as emotional [@Scherer2005]. Neurological findings suggest that alexithymia negatively influences brain regions employed in both the encoding of affective information and integration of affective information with conceptual knowledge. Informed by constructionist emotion theory which posits that emotions are constructed through an integration of affective information, past experiences and conceptual knowledge the present study sought to reveal whether the existing findings of defects in emotion categorisation are also present on an affective level. We first asked particpants to recall emotion words that they associated with music before presenting musical stimuli representing five emotions (happy, tender, sad, angry, fearful) of different valence and arousal combinations. We hypothesised people high in alexithymia to have reduced recall of emotion words for music and to judge arousal and valence of all musical stimuli as more neutral.  
+  Music is an ideal stimulus type to investigate the contribution of alexithymia to the reduced ability to make categorical emotion judgements as it is inherently processed as emotional [@Scherer2005]. Neurological findings suggest that alexithymia negatively influences brain regions employed in both the encoding of affective information and integration of affective information with conceptual knowledge. Informed by constructionist emotion theory which posits that emotions are constructed through an integration of affective information, past experiences and conceptual knowledge the present study sought to reveal whether the existing findings of defects in emotion categorisation are also present on an affective level. We first asked particpants to recall emotion words that they associated with music before presenting musical stimuli representing five emotions (happy, tender[^1], sad, angry, fearful) of different valence and arousal combinations. We hypothesised people high in alexithymia to have reduced recall of emotion words for music and to judge arousal and valence of all musical stimuli as more neutral.  
 
+[^1]: 
 ```{r setup, include = FALSE}
 library("papaja")
 library("tinytex")
@@ -155,21 +151,140 @@ cleanrr$clinicalalex <- dicho(cleanrr$alexithymia, dich.by = 50)
   In a text box, participants freely responded to the following prompt “In this box please write as many emotions as you can think of that are expressed in music”. 
 
 ### Music Stimuli
-  Ten pieces of music representing five emotions were taken from the film soundtrack list provided by @Eerola2011. All peices of music were 15 seconds in duration and instrumental only. 
-  
+  Ten pieces of music representing five emotions were taken from the film soundtrack list provided by @Eerola2011[^2]. All peices of music were 15 seconds in duration and instrumental only. 
+[^2]: The songs had the following numbers in @Eerola2011. sad: 31, 109; angry: 1, 69, fearful, 11, 14; happy: 23, 105; tender: 41, 42. 
 ### Judgement of Affect 
   Participants were given the instruction to rate the emotion of the music on two semantic differential scales. The first scale measured valence and was measured from -3 (negative) to 3 (positive) and the second measured arousal from -3 (low energy) to 3 (high energy). The valence and arousal perceived for each target emotion was the average valence and arousal score for the two musical pieces representing the given target emotion. 
   
 ### Alexithymia 
   Alexithymia was measured using the 20-item Toronto Alexithymia Scale (TAS-20; Bagby, Parker, & Taylor, 1994). The TAS-20 is widely used to measure alexithymia and demonstrated good internal consistency in the current sample, Cronbach’s alpha = `r TASalpha$alpha$rawalpha`. The difficulty describing feelings and difficulty identifying feelings subscales demonstrated good internal consistency, Cronbach's alphas > `r DDFalpha$alpha$rawalpha`. The externally oriented thinking subscale showed poor internal consistency Cronbach's alpha = `r EOTalpha$alpha$rawalpha`
 
-## Procedure
+```{r create dass}
+D <- c("DASS3_1", "DASS10_1", "DASS13_1", "DASS16_1", "DASS17_1", "DASS21_1")
+DASSaplha <- cleanrr %>% select(D) %>% alpha()
+cleanrr$depression <- cleanrr %>% select(D) %>% rowSums()
+```
 
-## Data analysis 
-We used `r cite_r("r-references.bib")` for all our analyses.
+### Depression 
+  Depression was measured using the depression subscale of the Depression Anxiety and Stress Scale (DASS; @Lovibond1995). The DASS is widely used by health professionals to assess for depression and was originally collected in the data set for another project. The depression subscale of the DASS showed excellent internal consistency, Chronbach’s alpha = `r DASSalpha$aplha$rawalpha`. The stress and anxiety subscales were not analysed for this study.
+
+## Procedure
+  The study was completed online using the Qualtrics survey platform. After providing consent participants were asked to complete the measure of musical emotion concepts, 60 seconds was allowed for this before the page automatically advanced. They were then given the instructions to listen to each musical clip and make a rating of their perception of the affect in the musical pieces using sliders. Participants then listened to all ten musical pieces in a randomised order before completing alexithymia and demographic measures. Additional measures were collected for a separate study and not analysed as part of this study[^2]. 
+[^2]: The OSF project showing the original data set division can be seen at https://osf.io/gvy4b/
+
+## Ethical Approval 
+  Ethical approval for the study was given by the faculty of Health and Behavioural Sciences at The University of Queensland. 
+
+
+```{r lexicon}
+cleanrr$pos.lex.count <- ((cleanrr$posemo*cleanrr$WC)/100)
+#round 
+cleanrr$pos.lex.count <- round(cleanrr$pos.lex.count, digits = 0)
+cleanrr$neg.lex.count <- ((cleanrr$negemo*cleanrr$WC)/100)
+cleanrr$neg.lex.count <- round(cleanrr$neg.lex.count, digits = 0)
+cleanrr$emo.lex.count <- cleanrr$neg.lex.count + cleanrr$pos.lex.count
+xfun::pkg_attach2("psych")
+psych::describe(select(cleanrr, contains("count")))
+```
+
+```{r music score creation}
+##--------Music Ratings
+#Sad Music 
+#Valence
+cleanrr$sad.valence <- (cleanrr$MUVA31_1 + cleanrr$MUVA109_1) / 2
+#AROUSAL 
+cleanrr$sad.arousal <- (cleanrr$MUAR31_1 + cleanrr$MUAR109_1) / 2
+#Angry music 
+#Valence 
+cleanrr$angry.valence <- (cleanrr$MUVA1_1 + cleanrr$MUVA69_1) / 2
+#AROUSAL
+cleanrr$angry.arousal <- (cleanrr$MUAR1_1 + cleanrr$MUAR69_1) / 2
+#Fear Music
+#VALENCE
+cleanrr$fear.valence <- (cleanrr$MUVA11_1 + cleanrr$MUVA14_1) / 2
+#AROUSAL
+cleanrr$fear.arousal <- (cleanrr$MUAR11_1 + cleanrr$MUAR14_1) / 2
+#Happy Music 
+#VALENCE
+cleanrr$happy.valence <- (cleanrr$MUVA23_1 + cleanrr$MUVA105_1) / 2 
+#AROUSAL
+cleanrr$happy.arousal = (cleanrr$MUAR23_1 + cleanrr$MUAR105_1) / 2
+#Tender music 
+#VALENCE
+cleanrr$tender.valence <- (cleanrr$MUVA41_1 + cleanrr$MUVA42_1) / 2 
+#AROUSAL
+cleanrr$tender.arousal <- (cleanrr$MUAR41_1 + cleanrr$MUAR42_1) / 2 
+```
+
+```{r LexCor}
+library(apaTables)
+cleanrr %>% select(alexithymia, ddf, dif, eot, emo.lex.count, pos.lex.count, neg.lex.count) %>% glrstab() %>% apa_table(caption = "Correlation matrix and descriptives of alexithymia, subfactors, and emotion word count")
+```
+```{r reshape}
+library(sjmisc)
+long <- to_long(data = cleanrr,
+  keys = "Emotion",
+  values = c("Valence", "Arousal"),
+  c ("sad.valence", "happy.valence", "fear.valence", "tender.valence", "angry.valence"),
+  c ("sad.arousal", "happy.arousal", "fear.arousal", "tender.arousal", "angry.arousal")) %>%
+  select(id,
+         Emotion,
+         Valence,
+         Arousal,
+         alexithymia,
+         ddf,
+         dif,
+         eot,
+         depression) 
+
+long$Emotion <- mapvalues (long$Emotion, from = c ("sad.valence", "happy.valence", "fear.valence", "tender.valence", "angry.valence"), to = c("Sad", "Happy", "Fearful", "Tender", "Angry"))
+  
+long$Emotion <- as.factor(long$Emotion)
+long$Emotion <- relevel(long$Emotion, "Tender")
+```
+
+```{r describevalence}
+
+long %>% group_by(Emotion) %>% dplyr::summarise(
+  Mean = mean(Valence),
+  SD = sd(Valence),
+  Min = min(Valence),
+  Max = max(Valence)) %>% apa_table(caption = "rated valence for each target emotion") 
+```
+
+```{r describearousal}
+
+
+long %>% group_by(Emotion) %>% dplyr::summarise(
+  Mean = mean(Arousal),
+  SD = sd(Arousal),
+  Min = min(Arousal),
+  Max = max(Arousal)) %>% apa_table(caption = "rated arousal for each target emotion") 
+```
+
+
+```{r valence glmm}
+library(lmerTest)
+valenceinteract <- lmerTest::lmer(Valence ~ 1 + alexithymia + Emotion + alexithymia*Emotion + (1|id), data = long)
+
+anovavalence <- anova.lmerModLmerTest(valenceinteact)
+anovavalence
+```
+
+```{r valence model}
+
+
+
+```
 
 
 # Results
+To analyse the frequency of emotion words recalled, Linguistic Inquiry Word Count software [@Pennebaker2015] was used to count the number of words listed and the proportion of positive and negative emotion words. The proportion of positive and negative words was then converted to a count of positive and negative emotion words that was summed to give the total number of emotion words. While not hypothesized, we also explored the correlations between subscales of alexithymia and positive and negative word frequency. The correlation matrix can be seen in \@ref(tab:LexCor), along with descriptive statistics. Only one significant relationship between an alexithymia facet and lexicon count was found, whereby difficulty describing feelings negatively related to positive music emotion lexicon. 
+
+Two mixed general linear models with participant set as a grouping variable were conducted. Alexithymia, musical piece target emotion and their interaction were entered as predictors in the model and descriptive statistics for ratings of each target emotion can be seen in \@ref(tab:describevalnce). Ratings of valence were assessed in the first model. As shown in \@ref(tab:valencemodel) 
+
+
+
 
 # Discussion
 
