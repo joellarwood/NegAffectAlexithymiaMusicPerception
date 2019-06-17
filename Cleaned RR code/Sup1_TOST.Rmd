@@ -1,0 +1,81 @@
+---
+title: "Supplementary Materials"
+author: "Joel Larwood"
+date: "10/06/2019"
+output:
+  github_document: 
+    toc: true
+---
+
+```{r setup}
+library(TOSTER)
+```
+
+
+Here we present the Two One Sided Tests for the non-significant correlations reported between alexithymia and recall emotion lexicon. The interested reader may refer to Lakens, Scheel, and Isager (2018) for the details of this method. 
+
+```{r}
+TOSTER::powerTOSTr(alpha = .05, statistical_power = .8, N = 162) 
+
+low <- -.2280002
+high <- 0.2280002
+```
+
+#### Relationship between total alexithymia scores and total emotion words listed
+```{r total tost}
+#total emotions
+TOSTER::TOSTr(n = 162, r = -.05, low_eqbound_r = low, high_eqbound_r = high) 
+```
+
+#### Relationship between total alexithymia scores and total positive emotion words listed
+```{r positive tost}
+#positive emotions  
+TOSTER::TOSTr(n = 162, r = -.13, low_eqbound_r = low, high_eqbound_r = high) 
+```
+
+
+#### Relationship between total alexithymia scores and total negative emotion words listed
+```{r negative tost}
+#negative emotions
+TOSTER::TOSTr(n = 162, r = .02, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Externally Oriented Thinking (EOT) and total emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = .04, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Externally Oriented Thinking (EOT) and total positive emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = .03, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Externally Oriented Thinking (EOT) and total negative emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = .03, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Difficulty Describing Feelings (DDF) and total emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = -.06, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Difficulty Describing Feelings (DDF) and total negative emotion words listed
+```{r}
+TOSTER::TOSTr(n = 162, r = .05, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Difficulty Identifying Feelings (DDF) and total emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = -.08, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Difficulty Identifying Feelings (DDF) and total positive emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = -.13, low_eqbound_r = low, high_eqbound_r = high)  
+```
+
+#### Relationship between Difficulty Identifying Feelings (DDF) and total negative emotion words listed 
+```{r}
+TOSTER::TOSTr(n = 162, r = -.02, low_eqbound_r = low, high_eqbound_r = high)  
+```
