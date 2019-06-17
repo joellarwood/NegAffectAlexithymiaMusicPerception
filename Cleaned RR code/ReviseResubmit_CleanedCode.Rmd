@@ -1,0 +1,201 @@
+---
+title: "Revise and Resubmit Analyses - Cleaned Code"
+author: "Joel Larwood"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
+output:
+   github_document:
+    toc: true
+---
+
+# Load in packages 
+```{r load in}
+
+knitr::opts_chunk$set(echo = TRUE, message = FALSE)
+
+library(lme4)
+library(tidyverse)
+library(sjPlot)
+library(sjmisc)
+library(psych)
+library(tidyverse)
+library (skimr)
+library(visdat)
+library(interactions)
+library(gridExtra)
+library(corrplot)
+# remove.packages("lmerTest") # LmerTest prevents knitting 
+```
+
+# Load data and Create measures
+Always run as a whole chunk to ensure correct reverse coding
+```{r load and create data, message = FALSE}
+RRraw <- read_csv("Data with Depression.csv")
+
+RRraw <- RRraw %>% 
+  mutate(id = rownames(.), #create ID 
+         SadValence = (MUVA31_1+MUVA109_1)/2, # Mean valence sad songs
+         SadArousal = (MUAR31_1+MUAR109_1)/2, # mean arousal sad songs
+         AngryValence = (MUVA1_1 + MUVA69_1) / 2, # mean valence angry songs
+         AngryArousal = (MUAR1_1 + MUAR69_1) / 2, # mean arousal angry songs
+         FearValence = (MUVA11_1 + MUVA14_1) / 2, # mean valence fear songs
+         FearArousal = (MUAR11_1 + MUAR14_1) / 2, # mean arousal fear songs
+         HappyValence = (MUVA23_1 + MUVA105_1) / 2, # mean valence happy songs
+         HappyArousal = (MUAR23_1 + MUAR105_1) / 2, # mean arousal happy songs
+         TenderValence = (MUVA41_1 + MUVA42_1) / 2, # mean valence tender songs
+         TenderArousal = (MUAR41_1 + MUAR42_1) / 2, # mean arousal tender songs
+         PosEmo = round(((posemo*WC)/100), digits = 0), # Positive emotion word count
+         NegEmo = round(((negemo*WC)/100), digits = 0), # negative emotion word count
+         Emo = PosEmo+NegEmo, # total emotion words
+         TAS4_1 = 6 - TAS4_1, # reverse code alexithymia items
+         TAS5_1 = 6 - TAS5_1,
+         TAS10_1 = 6 - TAS10_1,
+         TAS18_1 = 6 - TAS18_1,
+         TAS19_1 = 6 - TAS19_1,
+         EOT = TAS5_1 + TAS8_1 + TAS10_1 + TAS15_1 + TAS16_1 + TAS18_1 + TAS19_1 + TAS20_1, # Externally oriented thinking
+         DIF = TAS1_1 + TAS3_1 + TAS6_1 +TAS7_1+TAS9_1+TAS13_1+TAS14_1, # difficulty identifying feelings
+         DDF = TAS2_1 + TAS4_1 + TAS11_1+TAS12_1+TAS17_1, # Difficulty describing feelings
+         TAS = EOT + DDF + DIF, # Total alexithymua
+         Depression = DASS3_1+ DASS10_1+ DASS13_1+ DASS16_1+ DASS17_1+ DASS21_1) # total depression
+```
+
+# Describe data 
+```{r describe data}
+RRraw %>% 
+  select(TAS, EOT, DIF, DDF, Depression, 
+         contains("Emo"),
+         contains("Arousal"),
+         contains("Valence")) %>% skimr::skim() %>% skimr::kable()
+
+dicho(RRraw$TAS, dich.by = 50) %>% table()
+
+```
+
+# Correlations with word count 
+```{r correlation TAS and words}
+WordCorVar <- RRraw %>% 
+  select(TAS, 
+         EOT, 
+         DDF, 
+         DIF, 
+         PosEmo, 
+         NegEmo, 
+         Emo)
+
+apaTables::apa.cor.table(WordCorVar, filename = "lexcor.txt")
+
+DiffCorPlot <- corrplot(corr = cor(WordCorVar),
+                        method = c("shade"),
+                        type = c("lower"),
+                        sig.level = c(.05),
+                        pch.col = c("red"),
+                        p.mat = cor.mtest(WordCorVar)$p,
+                        insig = c("label_sig"))
+
+```
+
+
+# Make long data 
+## Valence 
+```{r valence long}
+LongV <- RRraw %>% 
+  select(id,
+         TAS,
+         Depression,
+         contains("Valence")) %>% 
+  gather(key = "Target",
+         value = "Valence",
+         TenderValence, HappyValence, AngryValence, SadValence, FearValence, 
+         factor_key = TRUE) 
+
+LongV$Target <-  recode(LongV$Target, 
+                        TenderValence = "Tender",
+                        HappyValence = "Happy",
+                        AngryValence = "Angry",
+                        SadValence = "Sad",
+                        FearValence = "Fear")
+
+LongV %>% 
+  select(Target, 
+         Valence) %>% 
+  group_by(Target) %>%
+  skimr::skim() %>% 
+  skimr::kable()
+```
+
+## Arousal 
+```{r arousal long}
+LongA <- RRraw %>% 
+  select(id,
+         TAS,
+         Depression,
+         contains("Arousal")) %>% 
+  gather(key = "Target",
+         value = "Arousal",
+         TenderArousal, HappyArousal, AngryArousal, SadArousal, FearArousal, 
+         factor_key = TRUE) 
+
+LongA$Target <-  recode(LongA$Target, 
+                        TenderArousal = "Tender",
+                        HappyArousal = "Happy",
+                        AngryArousal = "Angry",
+                        SadArousal = "Sad",
+                        FearArousal = "Fear")
+
+LongA %>% select(Target, Arousal) %>% group_by(Target) %>% skimr::skim() %>% skimr::kable()
+```
+
+# Model Data 
+## Valence Data 
+```{r valence model}
+ValenceModelALX <- lme4::lmer(Valence~TAS*Target + (1|id), data = LongV) # Hypothesised model 
+
+ValenceModelDepControl <- lme4::lmer(Valence~Target*TAS + Depression + (1|id), data = LongV) # Add depression
+
+anova(ValenceModelALX, ValenceModelDepControl) # compared models - all 
+
+sjPlot::tab_model(ValenceModelALX, ValenceModelDepControl) 
+
+interactions::sim_slopes(model = ValenceModelALX, pred = TAS, modx = Target)
+
+sjPlot::plot_model(ValenceModelALX, 
+                   type = "int",
+                   title = "",
+                   axis.title = c("Alexithymia Score", "Rated Valence"),
+                   legend.title = "Target Emotion") + 
+  ggplot2::theme_classic() +
+  ggplot2::scale_y_continuous(name = "Rated Valence", breaks = c(-3, -2, -1, 0, 1, 2, 3), limits = c(-3,3)) +
+  ggplot2::geom_hline(yintercept = 0, linetype = "dotted") 
+
+```
+
+## Arousal Data 
+```{r arousal model}
+ArousalModelALX <- lme4::lmer(Arousal~TAS*Target + (1|id), data = LongA) # Hypothesised model 
+
+ArousalModelDepControl <- lme4::lmer(Arousal~Target*TAS + Depression + (1|id), data = LongA) # Add depression
+
+anova(ArousalModelALX, ArousalModelDepControl) # compared models  
+
+sjPlot::tab_model(ArousalModelALX, ArousalModelDepControl) 
+
+interactions::sim_slopes(model = ArousalModelALX, pred = TAS, modx = Target)
+
+sjPlot::plot_model(ArousalModelALX, 
+                   type = "int",
+                   title = "",
+                   axis.title = c("Alexithymia Score", "Rated Arousal"),
+                   legend.title = "Target Emotion") + 
+ggplot2::scale_y_continuous(name = "Rated Arousal", breaks = c(-3, -2, -1, 0, 1, 2, 3), limits = c(-3,3)) +
+  ggplot2::theme_classic() +
+  ggplot2::geom_hline(yintercept = 0, linetype = "dotted")     
+
+```
+
+## Table of regressions 
+```{r Models table}
+sjPlot::tab_model(ValenceModelALX, ArousalModelALX)
+```
+
+
+
+
