@@ -77,6 +77,7 @@ WordCorVar <- RRraw %>%
          EOT, 
          DDF, 
          DIF, 
+         Depression,
          PosEmo, 
          NegEmo, 
          Emo)
@@ -91,6 +92,8 @@ DiffCorPlot <- corrplot(corr = cor(WordCorVar),
                         p.mat = cor.mtest(WordCorVar)$p,
                         insig = c("label_sig"))
 
+#Control for depression
+tab_model((lm(PosEmo ~ DIF  + Depression, data = RRraw)))
 ```
 
 
